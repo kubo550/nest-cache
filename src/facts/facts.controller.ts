@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { FactsService } from './facts.service';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
@@ -28,6 +38,7 @@ export class FactsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
     return this.factsService.remove(+id);
   }

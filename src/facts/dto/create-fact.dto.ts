@@ -1,1 +1,3 @@
-export class CreateFactDto {}
+export class CreateFactDto {
+  text: string;
+}

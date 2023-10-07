@@ -2,22 +2,44 @@ import { Injectable } from '@nestjs/common';
 import { CreateFactDto } from './dto/create-fact.dto';
 import { UpdateFactDto } from './dto/update-fact.dto';
 
+const facts = [
+  { id: '1', text: 'Cats are the best' },
+  { id: '2', text: 'Dogs are the best' },
+] as any;
+
+const factIdGenerator = () => {
+  return facts.length + 1;
+};
+
 @Injectable()
 export class FactsService {
   create(createFactDto: CreateFactDto) {
-    return 'This action adds a new fact';
+    const newFact = {
+      id: factIdGenerator().toString(),
+      ...createFactDto,
+    };
+    facts.push(newFact);
+    return newFact;
   }
 
   findAll() {
-    return `This action returns all facts`;
+    return facts;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} fact`;
+    const founedFact = facts.find((fact) => fact.id === id.toString());
+
+    return founedFact;
   }
 
   update(id: number, updateFactDto: UpdateFactDto) {
-    return `This action updates a #${id} fact`;
+    const updatedFact = {
+      id: id.toString(),
+      ...updateFactDto,
+    };
+    facts[id - 1] = updatedFact;
+
+    return updatedFact;
   }
 
   remove(id: number) {
